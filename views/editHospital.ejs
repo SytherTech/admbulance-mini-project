@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Hospital</title>
+  <link rel="stylesheet" type="text/css" href="/css/edit-hospital.css">
+</head>
+<body>
+  <nav>
+    <ul class="navbar">
+      <li>Edit Hospital</li>
+    </ul>
+  </nav>
+  <div class="container">
+    <h2>Edit Hospital</h2>
+    <form action="/admin/update-hospital/<%= hospital._id %>" method="POST">
+      <label for="name">Hospital Name</label>
+      <input type="text" id="name" name="name" value="<%= hospital.name %>" required>
+      
+      <label for="location">Location</label>
+      <input type="text" id="location" name="location" value="<%= hospital.location %>" required>
+      
+      <label for="charges">Charges</label>
+      <input type="number" id="charges" name="charges" value="<%= hospital.charges %>" required>
+      
+      <button type="submit">Update Hospital</button>
+    </form>
+  </div>
+</body>
+</html>

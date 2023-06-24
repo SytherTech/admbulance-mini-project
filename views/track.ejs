@@ -1,0 +1,69 @@
+<!-- track-ambulance.ejs -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Track Ambulance</title>
+    <link rel="stylesheet" type="text/css" href="/css/track.css">
+</head>
+<body>
+    <nav>
+        <ul class="navbar">
+          <li><a href="/home">Home</a></li>
+          <li><a href="/track">Track Ambulance</a></li>
+          <li><a href="/logout">Logout</a></li>
+        </ul>
+      </nav>
+    <div class="container">
+        <h2>Track Ambulance</h2>
+        <form id="trackForm" action="/track-ambulance" method="POST">
+            <input type="text" id="bookingId" name="bookingId" placeholder="Enter Booking ID">
+            <button type="submit">Search</button>
+        </form>
+
+        <div id="bookingDetails" style="display: none;">
+            <h3>Booking Details:</h3>
+            <p><strong>Booking ID:</strong> <span id="bookingIdValue"></span></p>
+            <p><strong>Full Name:</strong> <span id="fullNameValue"></span></p>
+            <p><strong>Phone:</strong> <span id="phoneValue"></span></p>
+            <p><strong>Address:</strong> <span id="addressValue"></span></p>
+            <p><strong>Status:</strong> <span id="statusValue"></span></p>
+        </div>
+    </div>
+
+    <script>
+        // Function to handle form submission
+        document.getElementById("trackForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form from submitting normally
+            var bookingId = document.getElementById("bookingId").value;
+            fetch("/track-ambulance", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ bookingId: bookingId })
+            })
+            .then((response => response.json()))
+            .then(data => {
+                console.log(data)
+                if (data) {
+                    console.log("entered")
+                    // Display booking details
+                    document.getElementById("bookingIdValue").textContent = data._id;
+                    document.getElementById("fullNameValue").textContent = data.fullName;
+                    document.getElementById("phoneValue").textContent = data.phone;
+                    document.getElementById("addressValue").textContent = data.address;
+                    document.getElementById("statusValue").textContent = data.status;
+                    document.getElementById("bookingDetails").style.display = "block";
+                } else if (data.searched) {
+                    // No booking found
+                    document.getElementById("bookingDetails").style.display = "none";
+                    alert("No booking found with the specified ID.");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+        });
+    </script>
+</body>
+</html>

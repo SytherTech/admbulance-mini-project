@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ambulance Management</title>
+  <link rel="stylesheet" type="text/css" href="/css/home.css">
+</head>
+<body>
+  <nav>
+    <ul class="navbar">
+      <li><a href="/home">Home</a></li>
+      <li><a href="/track">Track Ambulance</a></li>
+      <li><a href="/logout">Logout</a></li>
+    </ul>
+  </nav>
+  <div class="search-container">
+    <h2>Search Hospitals</h2>
+    <form action="/search" method="POST">
+      <input type="text" name="location" placeholder="Enter location">
+      <button type="submit">Search</button>
+    </form>
+  
+    <div id="hospitalList">
+      <!-- The list of hospitals will be dynamically updated here -->
+    </div>
+  </div>
+  
+  <script>
+    document.querySelector("form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+  
+      const locationInput = document.querySelector("input[name=location]");
+      const location = locationInput.value;
+      console.log(location)
+  
+      const response = await fetch("/search", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ location }),
+      });
+  
+      if (response.ok) {
+        const hospitals = await response.json();
+ 
+        displayHospitalList(hospitals.hospitals);
+      } else {
+        console.error("Failed to fetch hospitals");
+      }
+    });
+  
+    function displayHospitalList(hospitals) {
+      const hospitalListContainer = document.getElementById("hospitalList");
+      hospitalListContainer.innerHTML = "";
+        console.log(hospitals)
+      if (hospitals.length > 0) {
+      
+        const ul = document.createElement("ul");
+        ul.classList.add("hospital-list");
+  
+        hospitals.forEach((hospital) => {
+          const li = document.createElement("li");
+          const h4 = document.createElement("h4");
+          const p = document.createElement("p");
+          const p1 = document.createElement("p");
+          const button = document.createElement("button");
+  
+          h4.textContent = hospital.name;
+          p.innerHTML = `<strong>Location:</strong> ${hospital.location}`;
+          p1.innerHTML = `<strong>Charges:</strong> Rs ${ hospital.charges}`;
+          button.textContent = "Book Ambulance";
+          button.addEventListener("click", () => {
+            bookAmbulance(hospital._id);
+          });
+  
+          li.appendChild(h4);
+          li.appendChild(p);
+          li.appendChild(p1);
+          li.appendChild(button);
+          ul.appendChild(li);
+        });
+  
+        hospitalListContainer.appendChild(ul);
+      } else {
+        const p = document.createElement("p");
+        p.textContent = "No hospitals found in the specified location.";
+        hospitalListContainer.appendChild(p);
+      }
+    }
+  
+   async function bookAmbulance(hospitalId) {
+   
+    window.location.href = "/book/" + hospitalId;
+      console.log("Booking ambulance for hospital ID:", hospitalId);
+    }
+  </script>
+  
+
+</body>
+</html>

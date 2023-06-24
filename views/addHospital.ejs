@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Hospital</title>
+  <link rel="stylesheet" type="text/css" href="/css/add.css">
+</head>
+<body>
+  <nav>
+    <ul class="navbar">
+      <li>Add Hosptals</li>
+
+    </ul>
+  </nav>
+  <div class="container">
+    <h2>Add Hospital</h2>
+    <form action="/add-hospital" method="POST">
+      <label for="name">Hospital Name</label>
+      <input type="text" id="name" name="name" required>
+      
+      <label for="location">Location</label>
+      <input type="text" id="location" name="location" required>
+      
+      <label for="charges">Charges</label>
+      <input type="number" id="charges" name="charges" required>
+      
+      <button type="submit">Add Hospital</button>
+    </form>
+  </div>
+</body>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,20 @@
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  .booking-info {
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin-top: 30px;
+  }
+  
+  p {
+    margin-bottom: 10px;
+  }
+  

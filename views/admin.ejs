@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel - Hospitals</title>
+  <link rel="stylesheet" type="text/css" href="/css/admin.css">
+</head>
+<body>
+  <nav>
+    <ul class="navbar">
+    
+      <li>Admin Panel</li>
+      <li><a href="/logout">Logout</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h2>List of Hospitals</h2>
+    <button class="add-hospital-button">Add Hospital</button>
+    <% if (hospitals.length > 0) { %>
+      <ul class="hospital-list">
+        <% hospitals.forEach(function(hospital) { %>
+          <li>
+            <h4><%= hospital.name %></h4>
+            <p><strong>Location:</strong> <%= hospital.location %></p>
+            <p><strong>Charges:</strong> <%= hospital.charges %></p>
+          
+          </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p>No hospitals found.</p>
+    <% } %>
+  </div>
+
+  <script>
+    const addButton = document.querySelector('.add-hospital-button');
+    addButton.addEventListener('click', () => {
+        window.location.href = "/addhospital";
+    });
+  </script>
+
+</body>
+</html>
